@@ -1,0 +1,32 @@
+@import '../main.scss';
+
+.repositoryContainer {
+	@extend .flexDisplay;
+	row-gap: 3rem;
+	:global {
+		.MuiPaper-root {
+			border-radius: 10px;
+			width: 100%;
+		}
+		.MuiFormControl-root{
+			margin :auto;
+		} 
+	}
+}
+
+@media screen and (max-width : 500px) {
+	.repositoryContainer{
+		:global {
+		.MuiFormControl-root{
+			margin :0 20px;
+		} 
+	}
+	}
+}
+
+.reposGridContainer{
+  @extend .flexDisplay;
+	width : 70%;
+  row-gap:10px;
+  margin-bottom: 10px;
+}

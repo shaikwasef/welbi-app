@@ -1,0 +1,9 @@
+.listElement{
+	cursor: pointer;
+	border-radius: 10px;
+	border : 0.5px solid grey;
+	width: inherit;
+	&:hover{
+		border: 1px solid blue;
+	}
+}

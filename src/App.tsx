@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ApplicationTaskButtons } from './components'
+import { ApplicationTaskButtons, SelectedComponent } from './components'
 import { applicationTasks } from './constants/constants'
 import './App.css'
 import { Tasks } from './constants/tasks.enum'
@@ -17,6 +17,7 @@ export function App() {
         defaultTask={task}
         handleClick={handleTaskChange}
       />
+      <SelectedComponent selectedTask={task} />
     </div>
   )
 }

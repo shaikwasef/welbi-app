@@ -9,9 +9,10 @@
 		.MuiFormLabel-root{
 			font-size: 1.4rem;
 			color: rgb(7, 21, 218);
-			&:focus{
-				color: rgb(7, 21, 218);
-			}
+			
+		}
+		.MuiFormLabel-root.Mui-focused{
+			color: rgb(7, 21, 218);
 		}
 	}
 }
