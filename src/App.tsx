@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useCallback } from 'react';
+import {CircularProgress} from '@mui/material';
+
+import { ErrorComponent } from './components';
+import { apiEndPoints } from './helpers/api-helper';
+import useApiGet from './helpers/hooks/use-api-get';
+import { IApiError} from './interfaces';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export function App() {
+  // const [reposData, error, loading] = useApi<IRepo>(
+  //   apiEndPoints.LOCAL_HOST_REPOS_API
+  // );
 
-export default App;
+  // const getComponent = useCallback(
+  //   (data: IRepo[], loader: boolean, apiError: IApiError | undefined) => {
+  //     if (loader) {
+  //       return <CircularProgress className="loaderClass" />;
+  //     }
+  //     if (apiError) {
+  //       return <ErrorComponent error={apiError} />;
+  //     }
+  //     return <RepositoryContainer repos={sortByDate(data)} />;
+  //   },
+  //   []
+  // );
+
+  return <div>hi</div>;
+}
