@@ -1,0 +1,17 @@
+.formLabel{
+	text-align: center;
+	font-weight: 500;
+}
+
+.form {
+	margin:30px 0;
+	:global {
+		.MuiFormLabel-root{
+			font-size: 1.4rem;
+			color: rgb(7, 21, 218);
+			&:focus{
+				color: rgb(7, 21, 218);
+			}
+		}
+	}
+}

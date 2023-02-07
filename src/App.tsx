@@ -1,30 +1,22 @@
-import { useCallback } from 'react';
-import {CircularProgress} from '@mui/material';
-
-import { ErrorComponent } from './components';
-import { apiEndPoints } from './helpers/api-helper';
-import useApiGet from './helpers/hooks/use-api-get';
-import { IApiError} from './interfaces';
-
-import './App.css';
+import { useState } from 'react'
+import { ApplicationTaskButtons } from './components'
+import { applicationTasks } from './constants/constants'
+import './App.css'
+import { Tasks } from './constants/tasks.enum'
 
 export function App() {
-  // const [reposData, error, loading] = useApi<IRepo>(
-  //   apiEndPoints.LOCAL_HOST_REPOS_API
-  // );
+  const handleTaskChange = (selectedTask: Tasks) => {
+    setTask(selectedTask)
+  }
+  const [task, setTask] = useState<Tasks>(applicationTasks[0])
 
-  // const getComponent = useCallback(
-  //   (data: IRepo[], loader: boolean, apiError: IApiError | undefined) => {
-  //     if (loader) {
-  //       return <CircularProgress className="loaderClass" />;
-  //     }
-  //     if (apiError) {
-  //       return <ErrorComponent error={apiError} />;
-  //     }
-  //     return <RepositoryContainer repos={sortByDate(data)} />;
-  //   },
-  //   []
-  // );
-
-  return <div>hi</div>;
+  return (
+    <div className="appContainer">
+      <ApplicationTaskButtons
+        tasks={applicationTasks}
+        defaultTask={task}
+        handleClick={handleTaskChange}
+      />
+    </div>
+  )
 }
