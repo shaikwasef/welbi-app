@@ -9,7 +9,7 @@ export default function SelectedComponent(props: PropsInterface) {
   const { selectedTask } = props
 
   if (selectedTask !== Tasks.ENROLL) {
-    return <ListContainer />
+    return <ListContainer selectedTask={selectedTask} />
   }
   return <div>Enroll</div>
 }

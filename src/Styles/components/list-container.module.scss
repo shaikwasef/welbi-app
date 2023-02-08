@@ -1,12 +1,13 @@
 @import '../main.scss';
 
-.repositoryContainer {
+.listContainer {
 	@extend .flexDisplay;
-	row-gap: 3rem;
+	row-gap: 1.5rem;
+	width : 400px;
 	:global {
 		.MuiPaper-root {
 			border-radius: 10px;
-			width: 100%;
+			min-width: 100%;
 		}
 		.MuiFormControl-root{
 			margin :auto;
@@ -15,7 +16,7 @@
 }
 
 @media screen and (max-width : 500px) {
-	.repositoryContainer{
+	.listContainer{
 		:global {
 		.MuiFormControl-root{
 			margin :0 20px;

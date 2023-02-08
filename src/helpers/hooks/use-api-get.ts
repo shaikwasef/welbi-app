@@ -1,6 +1,11 @@
+import { bearerToken } from './../../api-constants';
 import { IApiError, ApiResponse } from '../../interfaces/use-api.interface';
 import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
+
+const config = {
+	headers: { Authorization: `Bearer ${bearerToken}` }
+};
 
 export default function useApiGet<ResponseType>(
 	url: string
@@ -12,7 +17,7 @@ export default function useApiGet<ResponseType>(
 	useEffect(() => {
 		async function fetchData() {
 			try {
-				const { data } = await axios.get<ResponseType[]>(url);
+				const { data } = await axios.get<ResponseType[]>(url, config);
 				setLoading(false);
 				setApiData(data);
 			} catch (e) {

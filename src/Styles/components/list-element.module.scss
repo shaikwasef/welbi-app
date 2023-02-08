@@ -1,9 +1,19 @@
 .listElement{
-	cursor: pointer;
 	border-radius: 10px;
 	border : 0.5px solid grey;
 	width: inherit;
+	height: 100px;
+	position: relative;
 	&:hover{
 		border: 1px solid blue;
 	}
+}
+
+.listInfo {
+	position: absolute;
+	bottom : 0;
+	display: flex;
+	width: calc(100% - 32px);
+	flex-direction: row;
+	justify-content: space-evenly;
 }

@@ -1,6 +1,9 @@
-export const apiEndPoints = {
-	WELBI_RESIDENT_LIST: "https://welbi.org/api/residents",
-	WELBI_PROGRAM_LIST: "https://welbi.org/api/programs"
-};
+import { apiEndPoints } from '../api-constants';
+import { Tasks } from './../constants/tasks.enum';
 
-export const bearerToken = "7248f49e-5282-47b3-8e61-6c49f80de597"
+export function getApiForTask(selectedTask: Tasks) {
+	if (selectedTask === Tasks.RESIDENT_LIST) {
+		return apiEndPoints.WELBI_RESIDENT_LIST
+	}
+	return apiEndPoints.WELBI_PROGRAM_LIST
+}
