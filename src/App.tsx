@@ -3,6 +3,7 @@ import { ApplicationTaskButtons, SelectedComponent } from './components'
 import { applicationTasks } from './constants/constants'
 import './App.css'
 import { Tasks } from './constants/tasks.enum'
+import logo from './assets/welbi_logo.png'
 
 export function App() {
   const handleTaskChange = (selectedTask: Tasks) => {
@@ -12,9 +13,10 @@ export function App() {
 
   return (
     <div className="appContainer">
+      <img src={logo} alt="Logo" className="appLogo" />
       <ApplicationTaskButtons
         tasks={applicationTasks}
-        defaultTask={task}
+        currentTask={task}
         handleClick={handleTaskChange}
       />
       <SelectedComponent selectedTask={task} />

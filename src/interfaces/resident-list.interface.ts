@@ -12,7 +12,7 @@ export interface IResident {
 	status: Status
 }
 
-enum Status {
+export enum Status {
 	ACTIVE = "Active",
 	PASSIVE = "Passive",
 	DECLINED = "Declined",

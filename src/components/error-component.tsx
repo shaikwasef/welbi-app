@@ -9,10 +9,6 @@ export default function ErrorComponent(props: PropsInterface) {
   return (
     <div className={Styles.errorContainer}>
       <h4>{error.status && `Status : ${error.status}`}</h4>
-      <h4>
-        {error?.documentation_url &&
-          `Description Url :  ${error?.documentation_url}`}
-      </h4>
       <h4>Message : {error.message}</h4>
     </div>
   )
