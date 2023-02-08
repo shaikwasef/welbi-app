@@ -3,7 +3,7 @@
 .listContainer {
 	@extend .flexDisplay;
 	row-gap: 1.5rem;
-	width : 400px;
+	width : 50%;
 	:global {
 		.MuiPaper-root {
 			border-radius: 10px;
@@ -12,6 +12,12 @@
 		.MuiFormControl-root{
 			margin :auto;
 		} 
+	}
+}
+
+@media screen and (max-width : 500px) {
+	.listContainer{
+		width : 320px;
 	}
 }
 
