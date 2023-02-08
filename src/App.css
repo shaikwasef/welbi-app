@@ -11,3 +11,10 @@
 	width :8rem;
 	height: 3rem;
 }
+
+@media screen and (max-width : 500px) {
+	.appLogo {
+		position: relative;
+		left: 0px;
+	}
+}
