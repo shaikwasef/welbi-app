@@ -1,10 +1,8 @@
 import {
-  Alert,
   Button,
   MenuItem,
   Select,
   SelectChangeEvent,
-  Snackbar,
   TextField,
 } from '@mui/material'
 import axios, { AxiosError } from 'axios'
@@ -14,6 +12,7 @@ import { config } from '../helpers/api-helper'
 import { IApiError } from '../interfaces'
 import { Status } from '../interfaces/resident-list.interface'
 import Styles from '../Styles/components/form-component.module.scss'
+import SnackBarComponent from './snackbar-component'
 
 export default function FormComponent() {
   const [residentId, setResidentId] = useState('')
@@ -84,30 +83,7 @@ export default function FormComponent() {
           SUBMIT
         </Button>
       </form>
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        open={open}
-        autoHideDuration={6000}
-        onClose={() => setOpen(false)}
-      >
-        {message === 'Success' ? (
-          <Alert
-            onClose={() => setOpen(false)}
-            severity="success"
-            sx={{ width: '100%' }}
-          >
-            Success!!!
-          </Alert>
-        ) : (
-          <Alert
-            onClose={() => setOpen(false)}
-            severity="error"
-            sx={{ width: '100%' }}
-          >
-            {message}
-          </Alert>
-        )}
-      </Snackbar>
+      <SnackBarComponent open={open} message={message} setOpen={setOpen} />
     </>
   )
 }
