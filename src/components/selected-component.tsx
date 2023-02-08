@@ -1,4 +1,5 @@
 import { Tasks } from '../constants/tasks.enum'
+import FormComponent from './form-component'
 import ListContainer from './list-container'
 
 interface PropsInterface {
@@ -7,9 +8,8 @@ interface PropsInterface {
 
 export default function SelectedComponent(props: PropsInterface) {
   const { selectedTask } = props
-
-  if (selectedTask !== Tasks.ENROLL) {
-    return <ListContainer selectedTask={selectedTask} />
+  if (selectedTask === Tasks.ENROLL) {
+    return <FormComponent />
   }
-  return <div>Enroll</div>
+  return <ListContainer selectedTask={selectedTask} />
 }

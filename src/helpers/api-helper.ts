@@ -1,4 +1,4 @@
-import { apiEndPoints } from '../api-constants';
+import { apiEndPoints, bearerToken } from '../api-constants';
 import { Tasks } from './../constants/tasks.enum';
 
 export function getApiForTask(selectedTask: Tasks) {
@@ -7,3 +7,8 @@ export function getApiForTask(selectedTask: Tasks) {
 	}
 	return apiEndPoints.WELBI_PROGRAM_LIST
 }
+
+
+export const config = {
+	headers: { Authorization: `Bearer ${bearerToken}` }
+};

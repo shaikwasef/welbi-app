@@ -1,11 +1,7 @@
-import { bearerToken } from './../../api-constants';
 import { IApiError, ApiResponse } from '../../interfaces/use-api.interface';
 import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-
-const config = {
-	headers: { Authorization: `Bearer ${bearerToken}` }
-};
+import { config } from '../api-helper';
 
 export default function useApiGet<ResponseType>(
 	url: string
