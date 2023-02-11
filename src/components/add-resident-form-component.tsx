@@ -1,12 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Button,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  TextField,
-} from '@mui/material'
+import { Button, Stack, TextField } from '@mui/material'
 import dayjs, { Dayjs } from 'dayjs'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import Styles from '../Styles/components/form-component.module.scss'
@@ -18,6 +11,7 @@ import { apiEndPoints } from '../api-constants'
 import axios, { AxiosError } from 'axios'
 import { config } from '../helpers/api-helper'
 import { IApiError } from '../interfaces'
+import SelectComponent from './select-component'
 
 export default function AddResidentFormComponent() {
   const [name, setName] = useState('')
@@ -26,10 +20,8 @@ export default function AddResidentFormComponent() {
   const [room, setRoom] = useState('')
   const [birthDate, setBirthDate] = useState<Dayjs | null>(dayjs(null))
   const [moveInDate, setMoveInDate] = useState<Dayjs | null>(dayjs(null))
-  const [status, setStatus] = useState<LevelOfCare>(LevelOfCare.INDEPENDENT)
-  const [ambulation, setAmbulation] = useState<Ambulation>(
-    Ambulation.NOLIMITATIONS,
-  )
+  const [status, setStatus] = useState<string>('')
+  const [ambulation, setAmbulation] = useState<string>('')
   const [open, setOpen] = useState<boolean>(false)
   const [message, setMessage] = useState<string>('Failure!! please check form')
 
@@ -43,6 +35,8 @@ export default function AddResidentFormComponent() {
         room,
         birthDate,
         moveInDate,
+        status,
+        ambulation,
       )
     ) {
       setOpen(true)
@@ -69,6 +63,8 @@ export default function AddResidentFormComponent() {
         setFirstName('')
         setLastName('')
         setRoom('')
+        setStatus('')
+        setAmbulation('')
         setBirthDate(null)
         setMoveInDate(null)
       } catch (e) {
@@ -111,32 +107,18 @@ export default function AddResidentFormComponent() {
             setRoom(event.target.value)
           }}
         />
-        <Select
-          defaultValue={status}
-          value={status}
-          onChange={(event: SelectChangeEvent) =>
-            setStatus(event.target.value as LevelOfCare)
-          }
-        >
-          {Object.values(LevelOfCare).map((option: string, index: number) => (
-            <MenuItem value={option} key={index}>
-              {option}
-            </MenuItem>
-          ))}
-        </Select>
-        <Select
-          defaultValue={ambulation}
-          value={ambulation}
-          onChange={(event: SelectChangeEvent) =>
-            setAmbulation(event.target.value as Ambulation)
-          }
-        >
-          {Object.values(Ambulation).map((option: string, index: number) => (
-            <MenuItem value={option} key={index}>
-              {option}
-            </MenuItem>
-          ))}
-        </Select>
+        <SelectComponent
+          label={'Level of care'}
+          currentState={status}
+          listItems={Object.values(LevelOfCare)}
+          setState={setStatus}
+        />
+        <SelectComponent
+          label={'Ambulation'}
+          currentState={ambulation}
+          listItems={Object.values(Ambulation)}
+          setState={setAmbulation}
+        />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Stack spacing={3}>
             <DatePicker

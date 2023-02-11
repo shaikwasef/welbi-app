@@ -1,76 +1,88 @@
 import React, { useState } from 'react'
-import {
-  Button,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  TextField,
-} from '@mui/material'
+import { Button, Stack, TextField } from '@mui/material'
 import dayjs, { Dayjs } from 'dayjs'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import Styles from '../Styles/components/form-component.module.scss'
-import { LevelOfCare, Ambulation } from '../interfaces/resident-list.interface'
+import { LevelOfCare } from '../interfaces/resident-list.interface'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import SnackBarComponent from './snackbar-component'
-import { returnResidentFormStatus } from '../helpers/helpers'
+import { returnProgramFormStatus } from '../helpers/helpers'
 import { apiEndPoints } from '../api-constants'
 import axios, { AxiosError } from 'axios'
 import { config } from '../helpers/api-helper'
 import { IApiError } from '../interfaces'
+import { facilitatorsList, hobbies, tagsList } from '../constants/constants'
+import MultiSelectComponent from './multi-select-component'
+import SelectComponent from './select-component'
 
 export default function AddProgramFormComponent() {
   const [name, setName] = useState('')
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [room, setRoom] = useState('')
-  const [birthDate, setBirthDate] = useState<Dayjs | null>(dayjs(null))
-  const [moveInDate, setMoveInDate] = useState<Dayjs | null>(dayjs(null))
-  const [status, setStatus] = useState<LevelOfCare>(LevelOfCare.INDEPENDENT)
-  const [ambulation, setAmbulation] = useState<Ambulation>(
-    Ambulation.NOLIMITATIONS,
-  )
+  const [isRepeated, setIsRepeated] = useState<string>('')
+  const [personHobbies, setPersonHobbies] = useState<string[]>([])
+  const [levelOfCare, setLevelOfCare] = useState<string[]>([])
+  const [facilitators, setFacilitators] = useState<string[]>([])
+  const [dimension, setDimension] = useState<string>('')
+  const [tags, setTags] = useState<string[]>([])
+  const [allDay, setAllDay] = useState<string>('')
+  const [location, setLocation] = useState<string>('')
+  const [startDate, setStartDate] = useState<Dayjs | null>(dayjs(null))
+  const [endDate, setEndDate] = useState<Dayjs | null>(dayjs(null))
+
   const [open, setOpen] = useState<boolean>(false)
   const [message, setMessage] = useState<string>('Failure!! please check form')
 
   const submitForm = async (e: any) => {
     e.preventDefault()
+
     if (
-      returnResidentFormStatus(
+      returnProgramFormStatus(
         name,
-        firstName,
-        lastName,
-        room,
-        birthDate,
-        moveInDate,
+        personHobbies,
+        levelOfCare,
+        facilitators,
+        dimension,
+        tags,
+        location,
+        startDate,
+        endDate,
+        allDay,
+        isRepeated,
       )
     ) {
       setOpen(true)
     } else {
       try {
-        const postApiUrl = apiEndPoints.WELBI_RESIDENT_LIST
+        const postApiUrl = apiEndPoints.WELBI_PROGRAM_LIST
         await axios.post(
           postApiUrl,
           {
             name: name,
-            birthDate: birthDate?.toISOString(),
-            moveInDate: moveInDate?.toISOString(),
-            levelOfCare: status,
-            ambulation: ambulation,
-            firstName: firstName,
-            lastName: lastName,
-            room: room,
+            isRepeated: 'true' === isRepeated,
+            hobbies: personHobbies,
+            levelOfCare: levelOfCare,
+            facilitators: facilitators,
+            dimension: dimension,
+            tags: tags,
+            allDay: 'true' === allDay,
+            location: location,
+            start: startDate?.toISOString(),
+            end: endDate?.toISOString(),
           },
           config,
         )
         setMessage('Success')
         setOpen(true)
         setName('')
-        setFirstName('')
-        setLastName('')
-        setRoom('')
-        setBirthDate(null)
-        setMoveInDate(null)
+        setIsRepeated('')
+        setPersonHobbies([])
+        setLevelOfCare([])
+        setFacilitators([])
+        setDimension('')
+        setTags([])
+        setAllDay('')
+        setLocation('')
+        setStartDate(null)
+        setEndDate(null)
       } catch (e) {
         const err = e as AxiosError<IApiError, any>
         console.log(err)
@@ -90,53 +102,57 @@ export default function AddProgramFormComponent() {
             setName(event.target.value)
           }}
         />
-        <TextField
-          label="First Name"
-          value={firstName}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setFirstName(event.target.value)
-          }}
+        <SelectComponent
+          label={'Is Repeated'}
+          currentState={isRepeated}
+          listItems={['true', 'false']}
+          setState={setIsRepeated}
+        />
+        <MultiSelectComponent
+          label={'Hobbies'}
+          listItems={hobbies}
+          setState={setPersonHobbies}
+          currentState={personHobbies}
+        />
+        <MultiSelectComponent
+          label={'Level of care'}
+          listItems={Object.values(LevelOfCare)}
+          setState={setLevelOfCare}
+          currentState={levelOfCare}
+        />
+        <MultiSelectComponent
+          label={'Facilitators'}
+          listItems={facilitatorsList}
+          setState={setFacilitators}
+          currentState={facilitators}
         />
         <TextField
-          label="Last Name"
-          value={lastName}
+          label="Dimension"
+          value={dimension}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setLastName(event.target.value)
+            setDimension(event.target.value)
           }}
+        />
+        <MultiSelectComponent
+          label={'Tags'}
+          listItems={tagsList}
+          setState={setTags}
+          currentState={tags}
+        />
+        <SelectComponent
+          label={'All day avalability'}
+          currentState={allDay.toString()}
+          listItems={['true', 'false']}
+          setState={setAllDay}
         />
         <TextField
-          label="Room"
-          value={room}
+          label="Location"
+          value={location}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setRoom(event.target.value)
+            setLocation(event.target.value)
           }}
         />
-        <Select
-          defaultValue={status}
-          value={status}
-          onChange={(event: SelectChangeEvent) =>
-            setStatus(event.target.value as LevelOfCare)
-          }
-        >
-          {Object.values(LevelOfCare).map((option: string, index: number) => (
-            <MenuItem value={option} key={index}>
-              {option}
-            </MenuItem>
-          ))}
-        </Select>
-        <Select
-          defaultValue={ambulation}
-          value={ambulation}
-          onChange={(event: SelectChangeEvent) =>
-            setAmbulation(event.target.value as Ambulation)
-          }
-        >
-          {Object.values(Ambulation).map((option: string, index: number) => (
-            <MenuItem value={option} key={index}>
-              {option}
-            </MenuItem>
-          ))}
-        </Select>
+
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Stack spacing={3}>
             <DatePicker
@@ -144,8 +160,8 @@ export default function AddProgramFormComponent() {
               label="Birth Date"
               openTo="year"
               views={['year', 'month', 'day']}
-              value={birthDate}
-              onChange={(v: Dayjs | null) => setBirthDate(v)}
+              value={startDate}
+              onChange={(v: Dayjs | null) => setStartDate(v)}
               renderInput={(params: any) => <TextField {...params} />}
             />
             <DatePicker
@@ -153,8 +169,8 @@ export default function AddProgramFormComponent() {
               label="Move In Date"
               openTo="year"
               views={['year', 'month', 'day']}
-              value={moveInDate}
-              onChange={(v: Dayjs | null) => setMoveInDate(v)}
+              value={endDate}
+              onChange={(v: Dayjs | null) => setEndDate(v)}
               renderInput={(params: any) => <TextField {...params} />}
             />
           </Stack>
